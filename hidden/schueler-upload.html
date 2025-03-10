@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Hochladen</title>
+    <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles/style.css">
+    <style>
+        /* Allgemeine Stile */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: flex-start;
+            flex-direction: column;
+            padding-top: 80px; /* Abstand schaffen, damit der Inhalt nicht hinter der Navbar ist */
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 80px;
+            background-color: #A8A8A8;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center; /* Vertikale Zentrierung der Elemente */
+            justify-content: space-between; /* Platzierung der Elemente */
+            padding-left: 30px;
+            z-index: 10;
+            padding-right: 10px; /* Added right padding to leave space for the button */
+        }
+
+        .navbar span {
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+        }
+
+        .navbar img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin-right: 20px;
+        }
+
+        /* Login-Button */
+        .login-button {
+            padding: 6px 10px; /* Smaller padding for a smaller button */
+            font-size: 12px; /* Smaller text */
+            background: linear-gradient(135deg, #007BFF, #0056b3);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            position: absolute; /* Position it absolutely */
+            right: 10px; /* Align it to the left */
+            bottom: 10px; /* Align it to the bottom */
+        }
+
+        .login-button:hover {
+            background: linear-gradient(135deg, #0056b3, #007BFF);
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3);
+            transform: translateY(2px); /* Small hover effect */
+        }
+
+        .login-button:active {
+            background: linear-gradient(135deg, #004080, #0056b3);
+            transform: translateY(1px);
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Login-Container */
+        .login-container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            margin-top: 100px; /* Abstand zur Navbar */
+        }
+
+        input {
+            display: block;
+            width: 100%;
+            max-width: 300px;
+            padding: 10px;
+            margin: 10px auto;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            width: 100%;
+            max-width: 300px;
+            padding: 10px;
+            background: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        .error {
+            color: red;
+            margin-top: 10px;
+        }
+
+        /* Mobile Anpassungen */
+        @media (max-width: 768px) {
+            .navbar {
+                height: 60px;
+                padding-left: 15px;
+            }
+
+            .navbar span {
+                font-size: 20px;
+            }
+
+            .navbar img {
+                width: 45px;
+                height: 45px;
+                margin-right: 10px;
+            }
+
+            .login-container {
+                width: 90%;
+                padding: 20px;
+            }
+
+            input {
+                max-width: 100%;
+            }
+
+            button {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Docx Hochladen</h1>
+    <form id="uploadForm" action="/upload-schueler" method="post" enctype="multipart/form-data">
+        <input type="file" name="docx" accept="application/vnd.openxmlformats-officedocument.wordprocessingml.document" required>
+        <button type="submit">Hochladen</button>
+    </form>
+      <audio autoplay loop>
+        <source src="https://cdn.glitch.global/2d4cc1af-adb7-4848-8cda-da9d6fe46ed0/public%2Fbackground.mp3?v=1740683703678" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>
+    <p id="status"></p>
+  <script > src="upload-script.js" </script>
+</body>
+</html>

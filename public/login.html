@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="bg.css">
+  <link rel="stylesheet" href="styles/style.css">
+    <style>
+        /* Allgemeine Stile */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 80px;
+            background-color: #A8A8A8;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            padding-left: 30px;
+            z-index: 10;
+        }
+
+        .navbar span {
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+        }
+
+        .navbar img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin-right: 20px;
+        }
+
+        /* Login-Container */
+        .login-container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            margin-top: 100px; /* Abstand zur Navbar */
+        }
+
+        input {
+            display: block;
+            width: 100%;
+            max-width: 300px;
+            padding: 10px;
+            margin: 10px auto;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            width: 100%;
+            max-width: 300px;
+            padding: 10px;
+            background: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        .error {
+            color: red;
+            margin-top: 10px;
+        }
+
+        /* Mobile Anpassungen */
+        @media (max-width: 768px) {
+            .navbar {
+                height: 60px;
+                padding-left: 15px;
+            }
+
+            .navbar span {
+                font-size: 20px;
+            }
+
+            .navbar img {
+                width: 45px;
+                height: 45px;
+                margin-right: 10px;
+            }
+
+            .login-container {
+                width: 90%;
+                padding: 20px;
+            }
+
+            input {
+                max-width: 100%;
+            }
+
+            button {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Graue Navigationsleiste -->
+    <div class="navbar">
+        <img src= "https://schuelerzeitung-gew.glitch.me/logo.jpg" alt="Logo">
+        <span>Login</span>
+    </div>
+
+    <!-- Login-Formular -->
+    <div class="login-container">
+        <h2>Bitte einloggen</h2>
+        <input type="text" id="username" placeholder="Username" required>
+        <input type="password" id="password" placeholder="Password" required>
+        <button onclick="login()">Anmelden</button>
+        <p id="error-message" class="error"></p>
+    </div>
+    <audio autoplay loop>
+        <source src="https://cdn.glitch.global/2d4cc1af-adb7-4848-8cda-da9d6fe46ed0/public%2Fbackground.mp3?v=1740683703678" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>
+    <script src="login.js"></script>
+<div id="datenschutzt" 
+
+     style="background: none; color: #6c757d; padding: 10px; font-size: 14px; 
+
+            position: fixed; bottom: 5px; width: 100%; text-align: center; overflow: hidden;">
+
+    © 2025 Szene online | 
+
+    <a href="/datenschutz.md" style="color: #6c757d; text-decoration: none;">Datenschutzerklärung</a> | 
+
+    <a href="/nutzungsbedingungen.md" style="color: #6c757d; text-decoration: none;">Nutzungsbedingungen</a>
+
+</div>
+  <div class="animated-bg">
+
+<div class="shape one"></div>
+
+<div class="shape two"></div>
+
+<div class="shape three"></div>
+
+<div class="shape one"></div>
+
+<div class="shape two"></div>
+
+<div class="shape three"></div>
+
+  </div>
+</body>
+</html>
