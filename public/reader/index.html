@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF-Reader</title>
+    <link rel="stylesheet" href="style.css">
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.4.2/mammoth.browser.min.js"></script>
+</head>
+<body>
+    <div id="reader-container">
+        <div id="page-container">
+            <canvas id="pdf-canvas"></canvas>
+        </div>
+        <div id="controls">
+            <button id="prev-btn">⬅️</button>
+            <span id="page-num">Seite 1 von 0</span>
+            <button id="next-btn">➡️</button>
+            <button id="zoom-out">➖</button>
+            <button id="zoom-in">➕</button>
+            <input type="number" id="page-input" min="1" />
+            <button id="jump-btn">Go</button>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

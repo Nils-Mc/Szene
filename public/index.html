@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schülerzeitung GEW</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="bg.css">
+  <link rel="stylesheet" href="styles/style.css">
+    <script src="https://www.google.com/recaptcha/api.js" async defer ></script>
+    <script src="captcha.js" defer ></script>
+    <script>
+        async function checkStatus() {
+
+            try {
+
+                let response = await fetch('/check', { method: 'GET' });
+
+                if (response.status === 500) {
+
+                    window.location.href = '/check';
+
+                }
+
+            } catch (error) {
+
+                console.error('Fehler beim Abrufen von /check:', error);
+
+            }
+
+        }
+
+        document.addEventListener("DOMContentLoaded", checkStatus);
+
+    </script>
+  <style>
+        #loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            gap: 20px;
+            height: 100%;
+            background-color: #000; /* Black background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            z-index: 1000;
+            font-family: Arial, sans-serif;
+        }
+
+        .spinner {
+            border: 8px solid #f3f3f3;
+            border-top: 8px solid #3498db;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: 
+              spin 2s linear infinite, 
+              colorChange 2s linear infinite;
+            }
+
+        @keyframes spin {
+            0% { 
+                transform: rotate(0deg) translateY(-5px); 
+            }
+            50% { 
+                transform: rotate(180deg) translateY(5px);  /* Halfway rotation with upward movement */
+            }
+            100% { 
+                transform: rotate(360deg) translateY(-5px); 
+            }
+        }
+
+        @keyframes colorChange {
+            0% { border-top-color: #3498db; } /* Initial blue */
+            20% { border-top-color: #FF1493; } /* Neon pink */
+            40% { border-top-color: #FF00FF; } /* Magenta */
+            60% { border-top-color: #FFFF00; } /* Bright yellow */
+            80% { border-top-color: #39FF14; } /* Neon green */
+            100% { border-top-color: #00FFFF; } /* Electric blue */
+        }
+
+        /* Main Content */
+        #captcha-container {
+            text-align: center;
+            margin-top: 20%;
+        }
+        
+        .Main-Page {
+          font-family: Arial, sans-serif;
+          flex-direction: column;
+          margin-top: 50px;
+          text-align: center;
+          gap: 5px;
+          display: flex;
+    }
+      
+        /* Allgemeine Stile */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 80px;
+            background-color: #A8A8A8;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-left: 30px;
+            padding-right: 10px;
+            z-index: 10;
+        }
+
+        .navbar span {
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+        }
+
+        .navbar img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin-right: 20px;
+        }
+
+        /* Login-Button */
+        .login-button {
+            padding: 8px 16px;
+            font-size: 14px;
+            background: linear-gradient(45deg, #001f3f, #0074D9, #00A8E8, #39A2DB, #5EC3FF, #A7E4FF);
+            background-size: 300% 300%;
+            color: white;
+            border: none;
+            width: 130px;
+            border-radius: 8px;
+            font-weight: bold;
+            flex-direction: row;
+            cursor: pointer;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            position: fixed;
+            animation: blueWaves 6s linear infinite;
+        }
+
+        .login-button:hover {
+            background: linear-gradient(135deg, #212529, #007BFF);
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3);
+            animation: levitate 2s linear infinite;
+        }
+  
+       @keyframes blueWaves {
+         0% { background-position: 0% 50%; }
+         50% { background-position: 100% 50%; }
+         100% { background-position: 0% 50%; }
+       }
+
+    
+        .ausgaben-button {
+            padding: 8px 16px;
+            font-size: 14px;
+            background: linear-gradient(45deg, #001f3f, #0074D9, #00A8E8, #39A2DB, #5EC3FF, #A7E4FF);
+            background-size: 300% 300%;
+            color: white;
+            border: none;
+            width: 130px;
+            border-radius: 8px;
+            font-weight: bold;
+            flex-direction: row;
+            cursor: pointer;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            position: fixed;
+            animation: blueWaves 6s linear infinite;
+           }
+    
+        .ausgaben-button:hover {
+            background: linear-gradient(135deg, #212529, #007BFF);
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3);
+            animation: levitate 2s linear infinite;
+        }
+        @keyframes back {
+          50% {
+            transform: translateY(-3px);
+          }
+          100% {
+            transform: translateY(0);
+          }
+        }
+        
+        .button-container {
+            gap: 150px;
+            transform: translateY(0);
+            padding-left: 50%;
+            margin-top: 20px;
+            flex-direction: row;
+            z-index: 10;
+            display: flex;
+        }
+        @keyframes levitate {
+          0% {
+            transform: translateY(-3px);
+          }
+          50% {
+            transform: translateY(3px);  /* Moves back down */
+          }
+          100% {
+            transform: translateY(-3px);  /* Moves back down */
+          }
+        }
+
+        /* PDF List Styles */
+        #pdf-list {
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        #pdf-list li {
+            list-style: none;
+            width: 220px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        button {
+            width: 100%;
+            background: white;
+            border: none;
+            font-size: 64px;
+            cursor: pointer;
+            color: #33BFD1;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background: #f4f4f4;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        button:active {
+            background: #e0e0e0;
+        }
+
+        span {
+            display: block;
+            margin-top: 10px;
+            font-size: 14px;
+            color: #333;
+        }
+
+        /* Mobile Anpassungen */
+        @media (max-width: 768px) {
+            .navbar {
+                height: 60px;
+                padding-left: 15px;
+                padding-right: 15px;
+            }
+
+            .navbar span {
+                font-size: 20px;
+            }
+            .button-container {
+                display: flex;
+                gap: 50px;
+                flex-direction: column;
+                margin-top: 20px;
+                z-index: 10;
+            }
+            .navbar img {
+                width: 45px;
+                height: 45px;
+                margin-right: 10px;
+            }
+
+            .login-button {
+                font-size: 12px;
+                padding: 5px 10px;
+            }
+
+            .ausgaben-button {
+                font-size: 12px;
+                padding: 5px 10px;
+          }
+
+            .container {
+                padding: 10px;
+                width: 100%;
+            }
+
+            #pdf-list li {
+                width: 50%;
+                max-width: 300px;
+                text-align: center;
+            }
+
+            button {
+                font-size: 48px;
+            }
+        }
+
+        /* Desktop Anpassungen */
+        }
+  </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loading-screen">
+        <div class="spinner"></div>
+        <h2>Loading...</h2>
+    </div>
+
+    <div id="captcha-container">
+      <h2>Please verify you are human</h2>
+      <div class="g-recaptcha" data-sitekey="6LdAIeIqAAAAALTYjzDhuiwVmOoQf249_v-DrQOg" data-callback="onCaptchaSuccess" style="background: none; overflow: none; z-index: 1000;"></div>
+    </div>
+<script>
+    document.addEventListener("click", function once() {
+        const audio = document.getElementById("audio");
+
+        if (audio) {
+            if (audio.paused) {
+                audio.play();
+                document.removeEventListener("click")
+            }
+        };
+
+        });
+</script>
+    <!-- Graue Navigationsleiste -->
+    <div class="navbar">
+      <div style="display: flex; align-items: center;">
+          <img src="https://schuelerzeitung-gew.glitch.me/logo.jpg" alt="Logo">
+          <span>SZENE</span>
+      </div>
+    </div>
+<div class="animated-bg">
+<div class="shape one"></div>
+<div class="shape two"></div>
+<div class="shape three"></div>
+<div class="shape one"></div>
+<div class="shape two"></div>
+<div class="shape three"></div>
+  </div>
+    <div id="button-container" class="button-container">
+      <a href="https://schuelerzeitung-gew.glitch.me/login.html"> <button class="login-button">Login</button></a>
+      <a href="https://schuelerzeitung-gew.glitch.me/ausgaben.html"> <button class="ausgaben-button">Ausgaben</button></a>
+    </div>
+    <div class="Main-Page">
+      <a>
+        <h2>Schülerzeitung Essen-Werden</h2>
+        <h2>Neuigkeiten und Ereignisse</h2>
+      </a>
+      <a>
+      <div class="content" style="align-items: center;" >
+        <h1>Über uns – Szene Schülerzeitung</h1>
+        <p>Willkommen auf der Website der <strong>Szene Schülerzeitung</strong> des <strong>Gymnasiums Essen Werden</strong>! Unsere Schülerzeitung wird von der <strong>Szene-AG</strong> betrieben, einem engagierten Team von Schüler:innen aus verschiedenen Jahrgangsstufen. Unterstützt werden wir dabei von unseren Lehrkräften.</p>
+        
+        <p>Unsere Mission ist es, mit der Zeitung <strong>alles</strong> abzudecken – vom Schulleben bis hin zu aktuellen Themen aus Kultur, Politik, Sport und vielem mehr. Wir möchten nicht nur informieren, sondern auch unterhalten und den Austausch von Meinungen anregen.</p>
+        
+        <p>Unsere Zeitung erscheint nicht regelmäßig, aber nach 6 Wochen findet ihr unsere neueste Ausgabe auch auf unserer Website. Wenn du auch ein Teil unseres Teams werden möchtest, kannst du einfach in die AG kommen! Schreibe uns eine Email an <strong>Szene-gew.Outlook.de</strong></p>
+        
+        <p>Hast du Fragen oder Artikelwünsche? Schreib uns einfach eine E-Mail an <strong>Szene-gew.Outlook.de</strong>.</p>
+        <p> Falls du Fehler oder Sicherheitslücken auf unserer Website findest schreibe uns gerne. Wir sind auch auf Microsoft Teams unter unserer Email erreichbar </p>
+    </div>
+      </a>
+    </div>
+    <!-- Container für die Liste der PDFs -->
+    <audio id="audio" autoplay loop>
+        <source src="https://cdn.glitch.global/2d4cc1af-adb7-4848-8cda-da9d6fe46ed0/public%2Fbackground.mp3?v=1740683703678" type="audio/mp3">
+        Your browser does not support the audio element.
+      </audio>
+
+    <div id="datenschutzt" 
+      style="background: transparent; color: #6c757d; padding: 10px; font-size: 14px; 
+        position: fixed; bottom: 2px; width: 100%; text-align: center; overflow: hidden; opacity: 0.5;">
+        © 2025 Szene online | 
+        <a href="/datenschutz.md" style="color: #6c757d; text-decoration: none;">Datenschutzerklärung</a> | 
+        <a href="/nutzungsbedingungen.md" style="color: #6c757d; text-decoration: none;">Nutzungsbedingungen</a>
+    </div>
+</body>
+</html>
