@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Hide the loading screen and show the content
       loadingScreen.style.display = "none";
-    }, Math.random() * (3000 - 750) + 750);
+    }, 750);
 
     // Callback function for successful CAPTCHA verification
     window.onCaptchaSuccess = function () {

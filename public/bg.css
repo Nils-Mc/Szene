@@ -82,5 +82,20 @@
     color: inherit; /* Übernimmt die Textfarbe */
 
 }
+#sound-toggle {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    font-size: 28px;
+    color: white;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 
 

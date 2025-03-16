@@ -1,27 +1,27 @@
 const express = require("express");
 const multer = require("multer");
+const axios = require("axios");
 const path = require("path");
 const fs = require("fs");
-require('dotenv').config()
+require('dotenv').config();
+const trustorigin2 = "https://localhost:3000";
 const { exec } = require("child_process"); // Import exec from child_process
 const basicAuth = require("express-basic-auth");
-const serverDomain = "https://schuelerzeitung-gew.glitch.me";
+const serverDomain = "https://schuelerzeitung-gew.glitch.me/";
 const app = express();
 const PASSWORD_FILE = path.join(__dirname, '../public', '.data', 'password-system.json');
 const PORT = 3000;
-const datafolder = path.join(__dirname, '../public', '.data')
+const datafolder = path.join(__dirname, '../public', '.data');
 const showDeletePage = false;
 const bannedFilePath = path.join(__dirname, "../banned.json");
 app.use(express.json());
-const trustorigin2 = "https://trustetreceiver.glitch.me/check-date";
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken"); // JWT for secure authentication
 const oldDir = path.join(__dirname, "../public", "uploads");
 const uploadDir = path.join(__dirname, "../public", ".data", "uploads");
 const schueler_uploadDir = path.join(__dirname, "../public/.data", "schueler-uploads");
 app.use(express.static(path.join(__dirname, "../public")));
-const passwords = path.join(__dirname, "../.data-password", "passwords.json")
-const secret = process.env.SECRET_KEY
+const passwords = path.join(__dirname, "../.data-password", "passwords.json");
 if (!fs.existsSync(schueler_uploadDir)) {
   fs.mkdirSync(schueler_uploadDir, { recursive: true });
 }
@@ -32,8 +32,97 @@ if (!fs.existsSync(datafolder)) {
   fs.mkdirSync(datafolder, { recursive: true });
 }
 
-const passwordsFilePath = passwords;  // Update with the correct path to your passwords.json
+function rollChar() {
 
+    const isLetter = Math.random() < 0.5; // 50% chance to be a letter or number
+
+    if (isLetter) {
+
+        const isUpperCase = Math.random() < 0.5; // 50% chance to be upper or lower case letter
+
+        const alphabet = isUpperCase ? 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' : 'abcdefghijklmnopqrstuvwxyz';
+
+        return alphabet[Math.floor(Math.random() * alphabet.length)];
+
+    } else {
+
+        // Random number between 1 and 10
+
+        return (Math.floor(Math.random() * 10) + 1).toString();
+
+    }
+
+}
+
+function generateToken() {
+
+    let token = '';
+
+    for (let i = 0; i < 20; i++) {
+
+        token += rollChar();
+
+    }
+
+    return token;
+
+}
+
+function generateAndMatchTokens() {
+
+    let token1 = generateToken();
+
+    let token2 = generateToken();
+
+    let finalToken = '';
+
+    for (let i = 0; i < 20; i++) {
+
+        if (token1[i] === token2[i]) {
+
+            finalToken += token1[i];
+
+        } else {
+
+            finalToken += Math.random() < 0.5 ? token1[i] : token2[i];
+
+        }
+
+    }
+
+    return finalToken;
+
+}
+
+function updateEnvFile(newToken) {
+
+    const envPath = path.join(__dirname, '../.env');
+
+    const envContent = fs.existsSync(envPath) ? fs.readFileSync(envPath, 'utf8') : '';
+
+    const envVariables = envContent.split('\n').reduce((acc, line) => {
+
+        const [key, value] = line.split('=');
+
+        if (key && value) acc[key.trim()] = value.trim();
+
+        return acc;
+
+    }, {});
+
+    const currentDate = new Date();
+
+    envVariables.TOKEN = newToken;
+
+    const updatedEnvContent = Object.entries(envVariables).map(([key, value]) => `${key}=${value}`).join('\n');
+
+    fs.writeFileSync(envPath, updatedEnvContent, 'utf8');
+
+    console.log(`Updated .env file with new TOKEN and TOKENDATE.`);
+
+}
+const secret = process.env.TOKEN;
+const passwordsFilePath = passwords;  // Update with the correct path to your passwords.json
 
 // Multer-Konfiguration für Datei-Uploads
 const storage = multer.diskStorage({
@@ -141,6 +230,30 @@ app.post('/create-account', async (req, res) => {
     });
 });
 
+app.post('/newtoken', (req, res) => {
+    const codeword = req.headers['codeword'];
+    const KEYC = "Dk6vhwxH0i3R245jhiE1hGdCJzkf_Rd_5wVps0qf49U";
+    if (!codeword || codeword !== KEYC) {
+        return res.status(403).json({ success: false, message: "Forbidden: Invalid codeword" });
+    }
+    try {
+
+        const newToken = generateAndMatchTokens();
+
+        updateEnvFile(newToken);
+        
+        console.log("Token Updatet")
+        res.json({ success: true, token: newToken });
+
+    } catch (error) {
+
+        console.error("Error updating .env file:", error);
+
+        res.status(500).json({ success: false, message: "Failed to update token." });
+
+    }
+});
+
 app.get('/user-add', (req, res) => {
     const origin = req.get("Origin") || req.get("Referer");
     if (origin && origin.startsWith(serverDomain)) {
@@ -224,8 +337,6 @@ app.post("/login", async (req, res) => {
     });
 
 });
-
-
 
 // API zum Hochladen von PDFs (nur für authentifizierte Nutzer
 app.post("/upload", authMiddleware, upload.single("pdf"), (req, res) => {
@@ -324,15 +435,22 @@ app.get('/dashboard', (req, res) => {
       res.status(403).json({ error: "Request origin is not allowed" });
     }
 });
+app.get('/newtoken.js', (req, res) => {
+    const origin = req.get("sec-fetch-site");
+    if (origin && origin == "same-origin") {
+        res.sendFile(path.join(__dirname, '../hidden', 'newtoken.js'));
+    } else {
+      res.status(403).json({ error: "Request origin is not allowed" });
+    }
+});
 
 app.get('/home', (req, res) => {
 
     const origin = req.get("Origin") || req.get("Referer");
 
     if (origin && origin.startsWith(serverDomain)) {
-
-        res.sendFile(path.join(__dirname, '../public', 'index.html'));
-
+        
+        res.redirect(serverDomain)
     } else {
 
       res.status(403).json({ error: "Request origin is not allowed" });
