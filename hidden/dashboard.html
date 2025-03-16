@@ -6,8 +6,6 @@
     <title>Schülerzeitung GEW</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="bg.css">
-   <link rel="stylesheet" href="bg.css">
-  <link rel="stylesheet" href="styles/style.css">
     <style>
         /* Allgemeine Stile */
         body {
@@ -116,7 +114,10 @@
     </style>
 </head>
 <body>
-
+  <script> 
+  require('dotenv').config();
+  const { exec } = require('child_process');
+  </script>
     <!-- Navigationsleiste -->
     <div class="navbar">
         <div style="display: flex; align-items: center;">
@@ -128,16 +129,18 @@
         <source src="https://cdn.glitch.global/2d4cc1af-adb7-4848-8cda-da9d6fe46ed0/public%2Fbackground.mp3?v=1740683703678" type="audio/mp3">
         Your browser does not support the audio element.
     </audio>
-    <!-- Button-Bereich auf der Seite -->
+    <script src="logout.js"> 
+    </script>
+    <script src="newtoken.js" ></script>
+
     <div class="button-container">
-        <script> src="logout.js" </script>
         <a href="/upload"><button class="nav-button">Upload</button></a>
         <a href="/home"><button class="nav-button">Home</button></a>
         <a href="/delete"><button class="nav-button">Delete</button></a>
         <a href="/user-add"><button class="nav-button">Add User</button></a>
         <a><button onclick="logout()" class="nav-button">Logout</button></a>
+        <a><button onclick="requestNewToken()" class="nav-button">Reset Token</button></a>
     </div>
-  <script src="logout.js"></script>
   <div class="animated-bg">
 
 <div class="shape one"></div>
