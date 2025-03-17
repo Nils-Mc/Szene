@@ -7,7 +7,7 @@ require('dotenv').config();
 const trustorigin2 = "https://localhost:3000";
 const { exec } = require("child_process"); // Import exec from child_process
 const basicAuth = require("express-basic-auth");
-const serverDomain = "https://schuelerzeitung-gew.glitch.me/";
+const serverDomain = "https://szene-online.com/";
 const app = express();
 const PASSWORD_FILE = path.join(__dirname, '../public', '.data', 'password-system.json');
 const PORT = 3000;
