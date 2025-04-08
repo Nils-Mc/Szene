@@ -32,6 +32,39 @@ if (!fs.existsSync(datafolder)) {
   fs.mkdirSync(datafolder, { recursive: true });
 }
 
+let serverProcess = null;
+
+function startMinecraftServer() {
+    if (serverProcess) {
+        console.log('Minecraft-Server läuft bereits.');
+        return;
+    }
+
+    const jarPath = path.join(__dirname, 'web_server', 'spigot.jar');
+
+    serverProcess = spawn('java', ['-Xmx1G', '-Xms1G', '-jar', jarPath, 'nogui'], {
+        cwd: path.join(__dirname, 'web_server')
+    });
+
+    serverProcess.stdout.on('data', (data) => {
+        console.log(`MC: ${data}`);
+    });
+
+    serverProcess.stderr.on('data', (data) => {
+        console.error(`MC ERROR: ${data}`);
+    });
+
+    serverProcess.on('close', (code) => {
+        console.log(`Minecraft-Server wurde beendet (Code: ${code})`);
+        serverProcess = null;
+    });
+
+    console.log('Minecraft-Server wurde gestartet.');
+}
+
+// Starte beim App-Start
+startMinecraftServer();
+
 function rollChar() {
 
     const isLetter = Math.random() < 0.5; // 50% chance to be a letter or number

@@ -4,7 +4,8 @@
   "description": "the-website-for-the-szene",
   "main": "server/server.js",
   "engines": {
-    "node": ">=14.0.0"
+    "node": ">=14.0.0",
+    "java": ">=20.0.0"
   },
   "scripts": {
     "start": "node server/server.js",
@@ -14,7 +15,7 @@
     "axios": "^1.8.2",
     "bcrypt": "^5.1.1",
     "dotenv": "^16.4.7",
-    "express": "^4.21.2",
+    "express": "^5.1.0",
     "express-basic-auth": "^1.2.1",
     "jsonwebtoken": "^9.0.2",
     "multer": "^1.4.4",
